@@ -28,6 +28,9 @@ mongoose.connect(
     }
   }
 );
+app.get("/", (req, res) => {
+  res.send("Hello, this is gigsman api!");
+});
 app.use(UserRouter);
 app.use(GigRouter);
 app.use(require("./routes/Blog"));
