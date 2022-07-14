@@ -24,6 +24,12 @@ module.exports.UpdateformData = async (req, res, next) => {
 };
 module.exports.GetformData = async (req, res, next) => {
   try {
+    const formData = await FormData.find();
+    if (formData) {
+      res.json({ error: false, message: formData });
+    } else {
+      res.json({ error: true, message: "No Data Available!" });
+    }
   } catch {
     (err) => {
       console.log("Error IN FormData", err.message);
