@@ -34,3 +34,4 @@ app.get("/", (req, res) => {
 app.use(UserRouter);
 app.use(GigRouter);
 app.use(require("./routes/Blog"));
+app.use(require("./routes/formData"));
