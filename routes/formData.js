@@ -6,6 +6,6 @@ router.post("/register-formData", formDataController.RegisterFormData);
 router.put("/update-formData", formDataController.UpdateformData);
 router.get("/get-formData", formDataController.GetformData);
 router.get("/filter-formData", formDataController.FilterformData);
-router.delete("/delete-formData", isAuth, formDataController.DeleteformData);
+router.delete("/delete-formData/:email", formDataController.DeleteformData);
 
 module.exports = router;

@@ -1,10 +1,6 @@
-const FormData = require("../models/formData");
+const FormData = require("../models/websiteLeads");
 module.exports.CreateformData = async (req, res, next) => {
   try {
-    const findIfExists = await FormData.findOne({ email: req.body.email });
-    if (findIfExists) {
-      return res.json({ error: true, message: "Email Already Registered!" });
-    }
     const Createdata = await FormData(req.body);
     await Createdata.save();
     console.log("CreateData", Createdata);
