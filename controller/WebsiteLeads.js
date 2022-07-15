@@ -1,10 +1,11 @@
 const FormData = require("../models/websiteLeads");
 module.exports.CreateformData = async (req, res, next) => {
   try {
+    console.log("arrived", req.body);
     const Createdata = await FormData(req.body);
     await Createdata.save();
     console.log("CreateData", Createdata);
-    res.send({ error: false, message: Createdata });
+    res.json({ error: false, message: Createdata });
   } catch {
     (err) => {
       console.log("Error IN FormData", err.message);

@@ -8,7 +8,7 @@ module.exports.CreateformData = async (req, res, next) => {
     const Createdata = await FormData(req.body);
     await Createdata.save();
     console.log("CreateData", Createdata);
-    res.send({ error: false, message: Createdata });
+    res.json({ error: false, message: Createdata });
   } catch {
     (err) => {
       console.log("Error IN FormData", err.message);
