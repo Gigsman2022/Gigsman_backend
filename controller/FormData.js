@@ -1,7 +1,10 @@
 const FormData = require("../models/formData");
 module.exports.CreateformData = async (req, res, next) => {
   try {
-    console.log("create form", req.body);
+    const findIfExists = await FormData.findOne({ email: req.body.email });
+    if (findIfExists) {
+      return res.json({ error: true, message: "Email Already Registered!" });
+    }
     const Createdata = await FormData(req.body);
     await Createdata.save();
     console.log("CreateData", Createdata);
@@ -121,6 +124,32 @@ module.exports.FilterformData = async (req, res, next) => {
 };
 module.exports.DeleteformData = async (req, res, next) => {
   try {
+  } catch {
+    (err) => {
+      console.log("Error IN FormData", err.message);
+      res.json({ error: true, message: err.message });
+    };
+  }
+};
+module.exports.RegisterFormData = async (req, res, next) => {
+  try {
+    const findIfExists = await FormData({ email: req.body.email });
+    if (findIfExists) {
+      const data = await FormData.findOneAndUpdate(
+        { email: req.body.email },
+        {
+          $set: {
+            registered: true,
+          },
+        },
+        {
+          new: true,
+        }
+      );
+      if (data) {
+        res.json({ error: true, message: "Registered!" + req.body.email });
+      }
+    }
   } catch {
     (err) => {
       console.log("Error IN FormData", err.message);
