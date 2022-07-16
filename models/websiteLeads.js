@@ -6,5 +6,7 @@ const Schema = new mongoose.Schema({
   service: { type: String },
   subject: { type: String },
   email: { type: String },
+  status: { type: String, default: "pending" },
+  source: { type: String, default: "website" },
 });
 module.exports = mongoose.model("website_leads", Schema);
