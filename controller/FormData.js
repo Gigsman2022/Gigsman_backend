@@ -79,19 +79,15 @@ module.exports.FilterformData = async (req, res, next) => {
     const formData = await FormData.find(
       {
         $and: [
-          {
-            gender:
-              gender == "all" || gender == undefined ? { $ne: gender } : gender,
-          },
           { skills: { $in: skills } },
           {
             $or: [
+              { address: { $regex: address } },
               { name: { $regex: name } },
               { email: { $regex: email } },
-
+              { gender: gender },
               { work_method: { $regex: work_method } },
               { work_mode: { $regex: work_mode } },
-              { address: { $regex: address } },
             ],
           },
         ],
@@ -107,6 +103,7 @@ module.exports.FilterformData = async (req, res, next) => {
         work_method: 1,
         work_mode: 1,
         gender: 1,
+        registered: 1,
       }
     );
     if (formData) {
