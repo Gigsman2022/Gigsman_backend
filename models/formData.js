@@ -1,15 +1,15 @@
 const mongoose = require("mongoose");
 const Schema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true },
-  phoneNumber: { type: String, required: true },
-  work_mode: { type: String, required: true },
-  work_method: { type: String, required: true },
+  name: { type: String },
+  email: { type: String },
+  phoneNumber: { type: String },
+  work_mode: { type: String },
+  work_method: { type: String },
   address: { type: String },
-  resume_link: { type: String, required: true },
-  skills: { type: [String], required: true },
-  gender: { type: String, required: true },
-  location: { type: String, required: true },
+  resume_link: { type: String },
+  skills: { type: [String] },
+  gender: { type: String },
+  location: { type: String },
   services: [
     {
       services: { type: String },
