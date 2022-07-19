@@ -18,6 +18,26 @@ module.exports.CreateformData = async (req, res, next) => {
 };
 module.exports.UpdateformData = async (req, res, next) => {
   try {
+    console.log(req.body);
+    const updateData = await FormData.findByIdAndUpdate(
+      { _id: req.body._id },
+      {
+        $set: {
+          name: req.body.name,
+          P: req.body.P,
+          Q: req.body.Q,
+          work_method: req.body.work_method,
+          work_mode: req.body.work_mode,
+          skills: req.body.skills,
+        },
+      },
+      { new: true }
+    );
+    if (updateData) {
+      res.json({ error: false, message: "Updated!" });
+    } else {
+      res.status(501).json({ error: true, message: updateData });
+    }
   } catch {
     (err) => {
       console.log("Error IN FormData", err.message);
@@ -79,16 +99,42 @@ module.exports.FilterformData = async (req, res, next) => {
     const formData = await FormData.find(
       {
         $and: [
-          { skills: { $in: skills } },
+          {
+            work_method: {
+              $regex: work_method,
+            },
+          },
           {
             $or: [
-              { address: { $regex: address } },
-              { name: { $regex: name } },
-              { email: { $regex: email } },
-              { gender: gender },
-              { work_method: { $regex: work_method } },
-              { work_mode: { $regex: work_mode } },
+              {
+                skills: {
+                  $in: skills,
+                },
+              },
+              {
+                address: {
+                  $regex: address,
+                },
+              },
+              {
+                name: {
+                  $regex: name,
+                },
+              },
+              {
+                email: {
+                  $regex: email,
+                },
+              },
+              {
+                gender: gender,
+              },
             ],
+          },
+          {
+            work_mode: {
+              $regex: work_mode,
+            },
           },
         ],
       },
