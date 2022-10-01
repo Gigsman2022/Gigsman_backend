@@ -17,7 +17,7 @@ cloudinary.config({
   secure: true,
 });
 const corsOpts = {
-  origin: "*",
+  origin: "https://gigzman.com/",
 
   methods: ["GET", "POST"],
 
