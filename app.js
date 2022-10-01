@@ -10,12 +10,6 @@ const ArticleRouter = require("./routes/article");
 
 var cloudinary = require("cloudinary").v2;
 
-cloudinary.config({
-  cloud_name: "yashraj28",
-  api_key: "426877626417987",
-  api_secret: "8UFaKWdmg_e-lMX29zd9r-kpSeM",
-  secure: true,
-});
 // const corsOpts = {
 //   origin: "https://gigzman.com/",
 
@@ -44,7 +38,12 @@ mongoose.connect(
     }
   }
 );
-
+cloudinary.config({
+  cloud_name: "yashraj28",
+  api_key: "426877626417987",
+  api_secret: "8UFaKWdmg_e-lMX29zd9r-kpSeM",
+  secure: true,
+});
 app.get("/", (req, res) => {
   res.send("Hello, this is gigsman api!");
 });
