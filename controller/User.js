@@ -53,22 +53,20 @@ module.exports.SignInUser = async (req, res, next) => {
 
     if (user != null && isMatched == true) {
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
-        expiresIn: "60s",
+        expiresIn: "7d",
       });
       user.lastLogin = Date.now();
       await user.save();
       res.json({ success: true, token });
     } else {
-      res.status.json({
-        success: "false",
+      res.json({
+        success: false,
         error: "User not Found with this email!!",
       });
     }
   } catch {
-    (err) => {
-      console.log("Error while Signing the User", err);
-      res.status(302).json({ error: err });
-    };
+    console.log("Error while Signing the User");
+    res.status(302).json({ success: false, error: "User not Found!" });
   }
 };
 module.exports.ProfileData = async (req, res, next) => {

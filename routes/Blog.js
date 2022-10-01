@@ -26,9 +26,11 @@ const upload = multer({
   }),
 });
 const Controller = require("../controller/Blog");
+const isAuth = require("../middlewares/isAuth");
 router.post(
   "/createBlog",
   upload.array("blog_image", 100),
+  isAuth,
   Controller.createBlog
 );
 router.get("/getAllBlogs", Controller.GetAllBlogs);

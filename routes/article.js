@@ -5,7 +5,7 @@ const multipart = require("connect-multiparty");
 const multipartWare = multipart();
 
 router.get("/article", Controller.getAll);
-router.post("/article", multipartWare, Controller.addArticle);
+router.post("/article", isAuth, multipartWare, Controller.addArticle);
 router.post("/article/clap", Controller.clapArticle);
 router.post("/article/comment", Controller.clapArticle);
 router.get("/article/:id", Controller.getArticle);

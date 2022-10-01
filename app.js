@@ -17,8 +17,11 @@ cloudinary.config({
   secure: true,
 });
 
-const helmet = require("helmet");
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://gigzman.com",
+  })
+);
 // app.use(multer().array("blog_image", 100));
 app.use(express.json());
 
@@ -40,7 +43,6 @@ mongoose.connect(
   }
 );
 
-app.use(helmet());
 app.get("/", (req, res) => {
   res.send("Hello, this is gigsman api!");
 });
