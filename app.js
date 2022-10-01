@@ -7,9 +7,19 @@ const { MONGO_URI } = require("./env");
 const UserRouter = require("./routes/User");
 const GigRouter = require("./routes/Gig");
 const ArticleRouter = require("./routes/article");
-const multer = require("multer");
+
+var cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+  cloud_name: "yashraj28",
+  api_key: "426877626417987",
+  api_secret: "8UFaKWdmg_e-lMX29zd9r-kpSeM",
+  secure: true,
+});
+
+const helmet = require("helmet");
 app.use(cors());
-app.use(multer().array("blog_image", 100));
+// app.use(multer().array("blog_image", 100));
 app.use(express.json());
 
 mongoose.connect(
@@ -29,9 +39,12 @@ mongoose.connect(
     }
   }
 );
+
+app.use(helmet());
 app.get("/", (req, res) => {
   res.send("Hello, this is gigsman api!");
 });
+
 app.use(UserRouter);
 app.use(GigRouter);
 app.use(ArticleRouter);

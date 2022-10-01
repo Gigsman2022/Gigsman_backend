@@ -26,7 +26,11 @@ const upload = multer({
   }),
 });
 const Controller = require("../controller/Blog");
-router.post("/createBlog", Controller.createBlog);
+router.post(
+  "/createBlog",
+  upload.array("blog_image", 100),
+  Controller.createBlog
+);
 router.get("/getAllBlogs", Controller.GetAllBlogs);
 router.get("/getBlog/:blog_id", Controller.GetBlogById);
 router.put("/updateBlog/:_id", Controller.UpdateBlogById);

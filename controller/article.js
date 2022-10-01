@@ -7,10 +7,10 @@ const cloudinary = require("cloudinary");
 module.exports = {
   addArticle: (req, res, next) => {
     let { text, title, claps, description } = req.body;
-    //let obj = { text, title, claps, description, feature_img: _feature_img != null ? `/uploads/${_filename}` : '' }
-    if (req.files.image) {
+    console.log(req.files.feature_img);
+    if (req.files.feature_img) {
       cloudinary.uploader.upload(
-        req.files.image.path,
+        req.files.feature_img.path,
         (result) => {
           let obj = {
             text,
@@ -20,20 +20,6 @@ module.exports = {
             feature_img: result.url != null ? result.url : "",
           };
           saveArticle(obj);
-          /*(new Student({...{url: result.url},...req.body})).save((err, newStudent) => {
-                const cloud_res = {
-                    url: result.url
-                }
-                const newS = newStudent.toObject()
-                console.log({...{url: result.url},...req.body})
-                if(err)
-                    res.send(err)
-                else if (!newStudent)
-                    res.send(400)
-                else
-                    res.send({...newS,...cloud_res})
-                next()
-            })*/
         },
         {
           resource_type: "image",
@@ -45,11 +31,12 @@ module.exports = {
     }
     function saveArticle(obj) {
       new Article(obj).save((err, article) => {
-        if (err) res.send(err);
-        else if (!article) res.send(400);
+        if (err) res.json({ error: true, message: err });
+        else if (!article)
+          res.status(400).json({ error: true, message: "Can't Save User!" });
         else {
           return article.addAuthor(req.body.author_id).then((_article) => {
-            return res.send(_article);
+            return res.json({ error: false, message: _article });
           });
         }
         next();
@@ -111,9 +98,10 @@ module.exports = {
       .populate("author")
       .populate("comments.author")
       .exec((err, article) => {
-        if (err) res.send(err);
-        else if (!article) res.send(404);
-        else res.send(article);
+        if (err) res.status(401).json({ error: true, message: err });
+        else if (!article)
+          res.status(404), json({ error: true, message: "No Articles Found!" });
+        else res.json({ error: false, message: article });
         next();
       });
   },
@@ -125,7 +113,7 @@ module.exports = {
     Article.findById(req.body.article_id)
       .then((article) => {
         return article.clap().then(() => {
-          return res.json({ msg: "Done" });
+          return res.json({ error: false, message: "Done" });
         });
       })
       .catch(next);
@@ -143,7 +131,7 @@ module.exports = {
             text: req.body.comment,
           })
           .then(() => {
-            return res.json({ msg: "Done" });
+            return res.json({ error: false, message: "Done" });
           });
       })
       .catch(next);
@@ -157,9 +145,13 @@ module.exports = {
       .populate("author")
       .populate("comments.author")
       .exec((err, article) => {
-        if (err) res.send(err);
-        else if (!article) res.send(404);
-        else res.send(article);
+        if (err) res.json({ error: true, message: err });
+        else if (!article)
+          res.status(404).json({
+            error: true,
+            message: "Can't Find What You Are Looking For!",
+          });
+        else res.status(200).json({ error: false, message: article });
         next();
       });
   },

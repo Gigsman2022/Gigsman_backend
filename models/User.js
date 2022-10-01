@@ -13,6 +13,7 @@ const UserSchema = new mongoose.Schema(
     provider_pic: { type: String, default: "" },
     token: { type: String },
     gigs_applied: [
+      
       {
         type: mongoose.Types.ObjectId,
         ref: "Gig",
