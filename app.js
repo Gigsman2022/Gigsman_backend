@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const { MONGO_URI } = require("./env");
 const UserRouter = require("./routes/User");
 const GigRouter = require("./routes/Gig");
+const ArticleRouter = require("./routes/article");
 const multer = require("multer");
 app.use(cors());
 app.use(multer().array("blog_image", 100));
@@ -33,6 +34,7 @@ app.get("/", (req, res) => {
 });
 app.use(UserRouter);
 app.use(GigRouter);
+app.use(ArticleRouter);
 app.use(require("./routes/Blog"));
 app.use(require("./routes/formData"));
 app.use(require("./routes/websiteLeads"));

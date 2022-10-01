@@ -27,5 +27,6 @@ const Schema = new mongoose.Schema({
   registered: { type: Boolean, default: false },
   P: { type: String },
   Q: { type: String },
+  price: { type: Number },
 });
 module.exports = mongoose.model("freelancerformData", Schema);

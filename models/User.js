@@ -10,7 +10,8 @@ const UserSchema = new mongoose.Schema(
     isVerified: { type: Boolean, default: false },
     isFreelancer: { type: Boolean, default: false },
     isClient: { type: Boolean, default: false },
-
+    provider_pic: { type: String, default: "" },
+    token: { type: String },
     gigs_applied: [
       {
         type: mongoose.Types.ObjectId,
