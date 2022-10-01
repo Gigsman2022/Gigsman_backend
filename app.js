@@ -16,14 +16,14 @@ cloudinary.config({
   api_secret: "8UFaKWdmg_e-lMX29zd9r-kpSeM",
   secure: true,
 });
-const corsOpts = {
-  origin: "https://gigzman.com/",
+// const corsOpts = {
+//   origin: "https://gigzman.com/",
 
-  methods: ["GET", "POST"],
+//   methods: ["GET", "POST"],
 
-  allowedHeaders: ["Content-Type"],
-};
-app.use(cors(corsOpts));
+//   allowedHeaders: ["Content-Type"],
+// };
+app.use(cors());
 // app.use(multer().array("blog_image", 100));
 app.use(express.json());
 
