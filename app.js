@@ -17,9 +17,10 @@ var cloudinary = require("cloudinary").v2;
 
 //   allowedHeaders: ["Content-Type"],
 // };
+app.use(express.json());
+
 app.use(cors());
 // app.use(multer().array("blog_image", 100));
-app.use(express.json());
 
 mongoose.connect(
   MONGO_URI,
