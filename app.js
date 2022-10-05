@@ -10,16 +10,29 @@ const ArticleRouter = require("./routes/article");
 
 var cloudinary = require("cloudinary").v2;
 
-const corsOpts = {
-  origin: "*",
+// const corsOpts = {
+//   origin: "*",
 
-  methods: ["GET", "POST"],
+//   methods: ["GET", "POST"],
 
-  allowedHeaders: ["Content-Type"],
-};
+//   allowedHeaders: ["Content-Type"],
+// };
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested, Content-Type, Accept Authorization"
+  );
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Methods", "POST, PUT, PATCH, GET, DELETE");
+    return res.status(200).json({});
+  }
+  next();
+});
 app.use(express.json());
 
-app.use(cors(corsOpts));
+app.use(cors());
 // app.use(multer().array("blog_image", 100));
 
 mongoose.connect(
