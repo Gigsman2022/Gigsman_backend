@@ -26,6 +26,7 @@ app.use((req, res, next) => {
   );
   if (req.method === "OPTIONS") {
     res.header("Access-Control-Allow-Methods", "POST, PUT, PATCH, GET, DELETE");
+    console.log("req is serving from cors");
     return res.status(200).json({});
   }
   next();
