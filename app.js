@@ -17,7 +17,7 @@ var cloudinary = require("cloudinary").v2;
 
 //   allowedHeaders: ["Content-Type"],
 // };
-
+app.use(cors());
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -33,7 +33,6 @@ app.use((req, res, next) => {
 });
 app.use(express.json());
 
-app.use(cors());
 // app.use(multer().array("blog_image", 100));
 
 mongoose.connect(
