@@ -1,5 +1,4 @@
 module.exports = {
-  BASE_URL: "http://localhost:5001",
   MONGO_URI:
     "mongodb+srv://yashraj:W5izGtkR8Hi1Dstm@cluster0.xzk221a.mongodb.net/?retryWrites=true&w=majority",
   JWT_SECRET: process.env.JWT_SECRET || "12345678",

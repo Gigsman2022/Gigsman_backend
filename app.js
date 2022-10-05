@@ -10,16 +10,16 @@ const ArticleRouter = require("./routes/article");
 
 var cloudinary = require("cloudinary").v2;
 
-// const corsOpts = {
-//   origin: "https://gigzman.com/",
+const corsOpts = {
+  origin: "*",
 
-//   methods: ["GET", "POST"],
+  methods: ["GET", "POST"],
 
-//   allowedHeaders: ["Content-Type"],
-// };
+  allowedHeaders: ["Content-Type"],
+};
 app.use(express.json());
 
-app.use(cors());
+app.use(cors(corsOpts));
 // app.use(multer().array("blog_image", 100));
 
 mongoose.connect(
