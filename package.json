@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "start:pm2": "pm2-runtime start app.js -i max"
+    "start:pm2": "pm2-runtime start app.js -i max",
+    "heroku-postbuild": "npm install pm2"
   },
   "keywords": [],
   "author": "",
