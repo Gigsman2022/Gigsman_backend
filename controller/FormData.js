@@ -45,9 +45,27 @@ module.exports.UpdateformData = async (req, res, next) => {
     };
   }
 };
-module.exports.GetformData = async (req, res, next) => {
+module.exports.GetFormData = async (req, res, next) => {
   try {
-    const formData = await FormData.find();
+    const formData = await FormData.find({ registered: false });
+    if (formData) {
+      res.json({ error: false, message: formData });
+    } else {
+      res.json({ error: true, message: "No Data Available!" });
+    }
+  } catch {
+    (err) => {
+      console.log("Error IN FormData", err.message);
+      res.json({ error: true, message: err.message });
+    };
+  }
+};
+
+module.exports.GetRegisteredFormData = async (req, res, next) => {
+  try {
+    const formData = await FormData.find({
+      registered: true,
+    });
     if (formData) {
       res.json({ error: false, message: formData });
     } else {
@@ -96,47 +114,31 @@ module.exports.FilterformData = async (req, res, next) => {
       "location",
       location
     );
+    var q = {}; // declare the query object
+    q["$and"] = []; // filter the search by any criteria given by the user
+    if (work_mode.length > 0) {
+      // if the criteria has a value or values
+      q["$and"].push({ work_mode: { $regex: work_mode } }); // add to the query object
+    }
+    if (work_method.length > 0) {
+      q["$and"].push({ work_method: { $regex: work_method } });
+    }
+    if (skills.length > 0) {
+      q["$and"].push({ skills: { $in: skills } });
+    }
+    if (email.length > 0) {
+      q["$and"].push({ email: { $regex: email } });
+    }
+    if (gender.length > 0) {
+      q["$and"].push({ gender: { $regex: gender } });
+    }
+    if (name.length > 0) {
+      q["$and"].push({ name: { $regex: name } });
+    }
+    console.log(q);
     const formData = await FormData.find(
       {
-        $and: [
-          {
-            work_method: {
-              $regex: work_method,
-            },
-          },
-          {
-            $or: [
-              {
-                skills: {
-                  $in: skills,
-                },
-              },
-              {
-                address: {
-                  $regex: address,
-                },
-              },
-              {
-                name: {
-                  $regex: name,
-                },
-              },
-              {
-                email: {
-                  $regex: email,
-                },
-              },
-              {
-                gender: gender,
-              },
-            ],
-          },
-          {
-            work_mode: {
-              $regex: work_mode,
-            },
-          },
-        ],
+        q,
       },
       {
         skills: 1,
@@ -153,7 +155,7 @@ module.exports.FilterformData = async (req, res, next) => {
       }
     );
     if (formData) {
-      console.log(formData);
+      // console.log(formData);
       res.json({ error: false, message: formData });
     } else {
       res.json({ error: true, message: "No Data Available!" });
