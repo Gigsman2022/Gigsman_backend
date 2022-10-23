@@ -7,6 +7,6 @@ router.put("/update-formData", formDataController.UpdateformData);
 router.get("/get-unregisteredFormData", formDataController.GetFormData);
 router.get("/get-registeredFormData", formDataController.GetRegisteredFormData);
 router.get("/filter-formData", formDataController.FilterformData);
-router.delete("/delete-formData/:email", formDataController.DeleteformData);
+router.delete("/delete-formData/:_id", formDataController.DeleteformData);
 
 module.exports = router;
