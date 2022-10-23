@@ -15,6 +15,15 @@ module.exports.CreateformData = async (req, res, next) => {
 };
 module.exports.UpdateformData = async (req, res, next) => {
   try {
+    // console.log(req.body);
+    const updateData = await FormData.findByIdAndUpdate(
+      req.body._id,
+      {
+        $set: { status: req.body.status },
+      },
+      { new: true }
+    );
+    console.log(updateData);
   } catch {
     (err) => {
       console.log("Error IN FormData", err.message);
@@ -121,16 +130,16 @@ module.exports.FilterformData = async (req, res, next) => {
 };
 module.exports.DeleteformData = async (req, res, next) => {
   try {
-    console.log(req.params.email);
-    const findIfExists = await FormData({ email: req.params.email });
+    // console.log(req.params._id);
+    const findIfExists = await FormData({ _id: req.params._id });
     if (findIfExists) {
       const formData = await FormData.findOneAndDelete({
-        email: req.params.email,
+        _id: req.params._id,
       });
       if (formData) {
         res.json({
           error: false,
-          message: "Request Deleted!" + req.params.email,
+          message: FormData.find(),
         });
       }
     }

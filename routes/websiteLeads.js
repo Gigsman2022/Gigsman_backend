@@ -6,6 +6,6 @@ router.post("/register-websiteLeads", formDataController.RegisterFormData);
 router.put("/update-websiteLeads", formDataController.UpdateformData);
 router.get("/get-websiteLeads", formDataController.GetformData);
 router.get("/filter-websiteLeads", formDataController.FilterformData);
-router.delete("/delete-websiteLeads/:email", formDataController.DeleteformData);
+router.delete("/delete-websiteLeads/:_id", formDataController.DeleteformData);
 
 module.exports = router;
