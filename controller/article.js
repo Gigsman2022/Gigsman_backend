@@ -95,8 +95,8 @@ module.exports = {
   },
   getAll: (req, res, next) => {
     Article.find(req.params.id)
-      .populate("author")
       .populate("comments.author")
+      .select("_id title feature_img createdAt")
       .exec((err, article) => {
         if (err) res.status(401).json({ error: true, message: err });
         else if (!article)
