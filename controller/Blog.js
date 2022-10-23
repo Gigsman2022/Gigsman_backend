@@ -41,7 +41,9 @@ module.exports.createBlog = async (req, res, next) => {
 };
 module.exports.GetAllBlogs = async (req, res, next) => {
   try {
-    const getAllBlogs = await blogSchema.find();
+    const getAllBlogs = await blogSchema
+      .find()
+      .select("blog_id blog_image category title createdAt");
     if (getAllBlogs) {
       return res.json({ error: false, message: getAllBlogs });
     } else {
