@@ -92,36 +92,38 @@ module.exports.FilterformData = async (req, res, next) => {
       phoneNumber,
       location,
     } = req.query;
-    console.log(
-      "name",
-      name,
-      "gender",
-      gender,
-      "email",
-      email,
-      "address",
-      address,
-      "work_mode",
-      work_mode,
-      "work_method",
-      work_method,
-      "resume_link",
-      resume_link,
-      "skills",
-      skills,
-      "phoneNumber",
-      phoneNumber,
-      "location",
-      location
-    );
+
+    // console.log(
+    //   "name",
+    //   name.length,
+    //   "gender",
+    //   gender,
+    //   "email",
+    //   email,
+    //   "address",
+    //   address,
+    //   "work_mode",
+    //   work_mode,
+    //   "work_method",
+    //   work_method,
+    //   "resume_link",
+    //   resume_link,
+    //   "skills",
+    //   skills,
+    //   "phoneNumber",
+    //   phoneNumber,
+    //   "location",
+    //   location
+    // );
     var q = {}; // declare the query object
+
     q["$and"] = []; // filter the search by any criteria given by the user
     if (work_mode.length > 0) {
       // if the criteria has a value or values
-      q["$and"].push({ work_mode: { $regex: work_mode } }); // add to the query object
+      q["$and"].push({ work_mode }); // add to the query object
     }
     if (work_method.length > 0) {
-      q["$and"].push({ work_method: { $regex: work_method } });
+      q["$and"].push({ work_method });
     }
     if (skills.length > 0) {
       q["$and"].push({ skills: { $in: skills } });
@@ -130,16 +132,16 @@ module.exports.FilterformData = async (req, res, next) => {
       q["$and"].push({ email: { $regex: email } });
     }
     if (gender.length > 0) {
-      q["$and"].push({ gender: { $regex: gender } });
+      q["$and"].push({ gender });
     }
     if (name.length > 0) {
       q["$and"].push({ name: { $regex: name } });
     }
+    q["$and"].push({ registered: true });
     console.log(q);
     const formData = await FormData.find(
-      {
-        q,
-      },
+      q,
+
       {
         skills: 1,
         name: 1,
@@ -154,6 +156,7 @@ module.exports.FilterformData = async (req, res, next) => {
         registered: 1,
       }
     );
+
     if (formData) {
       // console.log(formData);
       res.json({ error: false, message: formData });
